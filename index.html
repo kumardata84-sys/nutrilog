@@ -559,7 +559,8 @@
         </div>
       </div>
     </div>
-
+  </div>
+  
 <!-- Add Food Modal -->
 <div class="modal-bg" id="modal-bg" onclick="if(event.target===this)closeModal()">
   <div class="modal">
@@ -1075,9 +1076,8 @@ function renderHistory() {
       carbs: a.carbs + (e.carbs || 0) * e.qty,
       fiber: a.fiber + (e.fiber || 0) * e.qty,
     }), { cal: 0, protein: 0, carbs: 0, fiber: 0 });
-    const d = new Date(date + 'T00:00:00');
-    const label = d.toLocaleDateString('en-IN', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
-    return `<div class="history-day">
+    const [hy, hm, hd] = date.split('-').map(Number);
+const label = new Date(hy, hm-1, hd).toLocaleDateString('en-IN', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });    return `<div class="history-day">
       <div class="history-day-header">
         <span>${label}</span>
         <span style="color:${totals.cal >= DAILY_CAL ? 'var(--accent)' : 'var(--warn)'};font-size:15px">${Math.round(totals.cal)} cal</span>
@@ -1200,12 +1200,12 @@ function renderWeightChart() {
   });
 }
 
-function toggleKeyBanner() {
-  const banner = document.getElementById('api-key-banner');
-  const isVisible = banner.style.display !== 'none';
-  banner.style.display = isVisible ? 'none' : 'block';
-  if (!isVisible) document.getElementById('api-key-input').focus();
-}
+// function toggleKeyBanner() {
+//  const banner = document.getElementById('api-key-banner');
+ // const isVisible = banner.style.display !== 'none';
+ // banner.style.display = isVisible ? 'none' : 'block';
+ // if (!isVisible) document.getElementById('api-key-input').focus();
+// }
 
 // Goals & Calculations
 function calculateBMI() {
