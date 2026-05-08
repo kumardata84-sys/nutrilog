@@ -648,8 +648,12 @@ let currentDate = todayStr();
 let weightChart = null;
 let apiKey = '';
 
-function todayStr() {
-  return new Date().toISOString().slice(0, 10);
+function todayStr(){
+  const d = new Date();
+  const yyyy = d.getFullYear();
+  const mm = String(d.getMonth()+1).padStart(2,'0');
+  const dd = String(d.getDate()).padStart(2,'0');
+  return `${yyyy}-${mm}-${dd}`;
 }
 
 function load() {
@@ -748,12 +752,15 @@ function updateDateDisplay() {
   document.getElementById('date-picker').value = currentDate;
 }
 
-function changeDate(dir) {
-  const d = new Date(currentDate + 'T00:00:00');
-  d.setDate(d.getDate() + dir);
-  currentDate = d.toISOString().slice(0, 10);
-  updateDateDisplay();
-  renderLog();
+function changeDate(dir){
+  const parts = currentDate.split('-');
+  const d = new Date(parseInt(parts[0]), parseInt(parts[1])-1, parseInt(parts[2]));
+  d.setDate(d.getDate()+dir);
+  const yyyy = d.getFullYear();
+  const mm = String(d.getMonth()+1).padStart(2,'0');
+  const dd = String(d.getDate()).padStart(2,'0');
+  currentDate = `${yyyy}-${mm}-${dd}`;
+  updateDateDisplay(); renderLog();
 }
 
 function onDatePick() {
